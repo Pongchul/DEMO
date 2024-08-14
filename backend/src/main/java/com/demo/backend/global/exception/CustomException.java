@@ -5,15 +5,12 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class CustomException implements ErrorCode {
-
-    ;
-
-    private final int code;
+public class CustomException extends RuntimeException {
+    private final String errorCode;
     private final String message;
 
     public CustomException(ErrorCode code) {
-        this.code = code.getCode();
+        this.errorCode = code.getErrorCode();
         this.message = code.getMessage();
     }
 }

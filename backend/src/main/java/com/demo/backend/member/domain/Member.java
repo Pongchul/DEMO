@@ -1,5 +1,6 @@
 package com.demo.backend.member.domain;
 
+import com.demo.backend.global.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -15,7 +16,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
+public class Member extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -24,25 +25,18 @@ public class Member {
     @Column(nullable = false, length = 30)
     private String socialLoginId;
 
-    @Column(nullable = false, unique = true, length = 20)
+    @Embedded
     private String nickname;
 
     @Enumerated(value = STRING)
     private MemberState status;
 
-    @CreatedDate
-    @Column(updatable = false)
-    private LocalDateTime createdAt;
 
-    @LastModifiedDate
-    private LocalDateTime modifiedAt;
-
-    public Member(Long id, String socialLoginId, String nickname, MemberState status, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+    public Member(Long id, String socialLoginId, String nickname, MemberState status) {
         this.id = id;
         this.socialLoginId = socialLoginId;
         this.nickname = nickname;
         this.status = status;
-        this.createdAt = LocalDateTime.now();
-        this.modifiedAt = LocalDateTime.now();
     }
+
 }
